@@ -138,14 +138,14 @@ def main():
 
     args = parser.parse_args()
 
+    if not any([args.target_file, args.domains]):
+        parser.error('Please provide either a target file or a list of domains.')
+
     if args.target_file:
         with open(args.target_file, 'r') as file:
             domains = file.read().splitlines()
     elif args.domains:
         domains = args.domains.split(',')
-    else:
-        print("Please provide either a target file or a list of domains.")
-        return
 
     if not args.no_dns:
         additional_domains = get_domains_from_dnsrecon(domains)
